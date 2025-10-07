@@ -17,7 +17,9 @@
     "incremental": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "strict":true,
-    "strictNullChecks": true
+    "strict": true,
+    "strictNullChecks": true,
+    "paths": { "@/*": ["./src/*"] },
+    "types": ["vitest/globals"]
   }
 }
