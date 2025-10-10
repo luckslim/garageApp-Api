@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { Env } from 'src/env';
+import { Env } from '@/infra/env';
 import z from 'zod';
 const tokenPayloadSchema = z.object({
   sub: z.string(),
@@ -19,11 +19,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
   validate(payload: TokenPayloadSchema) {
-    return tokenPayloadSchema.parse(payload)
-    // try {
-    //   return tokenPayloadSchema.parse(payload); // se válido, retorna
-    // } catch (err) {
-    //   return null; // ou undefined
-    // }
+    return tokenPayloadSchema.parse(payload);
   }
 }

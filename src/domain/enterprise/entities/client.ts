@@ -1,0 +1,47 @@
+import { Entity } from "@/core/entities/entity";
+import type { UniqueEntityID } from "@/core/entities/unique-entity-id";
+
+export interface ClientProps {
+  clientId?: UniqueEntityID;
+  name: string;
+  email: string;
+  password: string;
+}
+export class Client extends Entity<ClientProps> {
+  get clientId() {
+    return this.props.clientId;
+  }
+  get name() {
+    return this.props.name;
+  }
+  get email() {
+    return this.props.email;
+  }
+  get password() {
+    return this.props.password;
+  }
+  set name(name: string) {
+    this.props.name = name;
+  }
+  set email(email: string) {
+    this.props.email = email;
+  }
+  set password(password: string) {
+    this.props.password = password;
+  }
+  // changeName(name: string) {
+  //   this.props.name = name;
+  // }
+
+  // changeEmail(email: string) {
+  //   this.props.email = email;
+  // }
+
+  // changePassword(password: string) {
+  //   this.props.password = password;
+  // }
+  static create(props: ClientProps, id?: UniqueEntityID) {
+    const client = new Client(props, id);
+    return client;
+  }
+}

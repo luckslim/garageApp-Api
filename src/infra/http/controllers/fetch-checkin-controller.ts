@@ -1,7 +1,7 @@
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipes';
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipes';
 import { Controller, Get, HttpCode, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '@/infra/prisma/prisma.service';
 import z from 'zod';
 const pageQueryParamSchema = z.object({
   pageParam: z
@@ -19,7 +19,7 @@ export class FetchCheckInByUserController {
   constructor(private prisma: PrismaService) {}
   @Get()
   async handle(@Query(queryValidationPipe) page: PageQueryParamSchema) {
-    const {pageParam} = page
+    const { pageParam } = page;
     const perPage = 2;
     const checkIns = await this.prisma.checkIn.findMany({
       take: perPage,

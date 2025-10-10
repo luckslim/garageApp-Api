@@ -1,4 +1,4 @@
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipes';
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipes';
 import {
   Body,
   HttpCode,
@@ -8,15 +8,15 @@ import {
 } from '@nestjs/common';
 import { Controller, Post } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { CurrentUser } from 'src/auth/current-user-decorator';
-import type { TokenPayloadSchema } from 'src/auth/jwt.strategy';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { CurrentUser } from '@/infra/auth/current-user-decorator';
+import type { TokenPayloadSchema } from '@/infra/auth/jwt.strategy';
+import { PrismaService } from '@/infra/prisma/prisma.service';
 import z from 'zod';
 const createCheckInBodySchema = z.object({
   vehicleId: z.string(),
 });
 type CreateCheckInBodySchema = z.infer<typeof createCheckInBodySchema>;
-const bodyValidationPipe = new ZodValidationPipe(createCheckInBodySchema)
+const bodyValidationPipe = new ZodValidationPipe(createCheckInBodySchema);
 @Controller('/checkin')
 @UseGuards(AuthGuard('jwt'))
 export class CreateCheckInController {
@@ -28,9 +28,9 @@ export class CreateCheckInController {
     @CurrentUser() user: TokenPayloadSchema,
   ) {
     if (!user) {
-      throw new UnauthorizedException("Unauthorized");
+      throw new UnauthorizedException('Unauthorized');
     }
-    const {vehicleId} = body
+    const { vehicleId } = body;
     const checkin = await this.prisma.checkIn.create({
       data: {
         vehicleId,
