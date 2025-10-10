@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma/prisma.service';
-import { CreateAccountController } from './controllers/create-account.controller';
+import { CreateAccountController } from './controllers/create-account-controller';
 import { envSchema } from './env';
 import { AuthModule } from './auth/auth.module';
 import { AuthenticateController } from './controllers/authenticate-controller';
-import { CreateCheckInController } from './controllers/create-checkin.controller';
+import { CreateCheckInController } from './controllers/create-checkin-controller';
+import { FetchCheckInByUserController } from './controllers/fetch-checkin-controller';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { CreateCheckInController } from './controllers/create-checkin.controller
     }),
     AuthModule,
   ],
-  controllers: [CreateAccountController, AuthenticateController, CreateCheckInController],
+  controllers: [ FetchCheckInByUserController,CreateAccountController, AuthenticateController, CreateCheckInController],
   providers: [PrismaService],
 })
 export class AppModule {}

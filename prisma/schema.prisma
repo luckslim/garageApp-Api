@@ -19,5 +19,16 @@ model User {
   email String @unique
   password String
 
+  CheckIn CheckIn[]
   @@map("users")
+}
+
+model CheckIn {
+  id String @id @default(uuid())
+  clientId String
+  client User @relation(fields: [clientId], references: [id])
+  vehicleId String
+  createdAt DateTime @default(now())
+  checkOut DateTime?
+  @@map("check_in") 
 }

@@ -5,20 +5,25 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Env } from 'src/env';
 import z from 'zod';
 const tokenPayloadSchema = z.object({
-    sub: z.uuid()
-})
- export type TokenPayloadSchema = z.infer<typeof tokenPayloadSchema>
+  sub: z.string(),
+});
+export type TokenPayloadSchema = z.infer<typeof tokenPayloadSchema>;
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-    constructor(config: ConfigService<Env, true>) {
-        const publicKey = config.get('JWT_PUBLIC_KEY', { infer: true });
-        super({
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: Buffer.from(publicKey, 'base64'),
-            algorithms: ['RS256'],
-        });
-    }
-    validate(payload : TokenPayloadSchema) {
-        return tokenPayloadSchema.parse(payload)
-    }
+  constructor(config: ConfigService<Env, true>) {
+    const publicKey = config.get('JWT_PUBLIC_KEY', { infer: true });
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: Buffer.from(publicKey, 'base64'),
+      algorithms: ['RS256'],
+    });
+  }
+  validate(payload: TokenPayloadSchema) {
+    return tokenPayloadSchema.parse(payload)
+    // try {
+    //   return tokenPayloadSchema.parse(payload); // se válido, retorna
+    // } catch (err) {
+    //   return null; // ou undefined
+    // }
+  }
 }
