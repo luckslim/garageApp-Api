@@ -10,7 +10,7 @@ import { Controller, Post } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import type { TokenPayloadSchema } from '@/infra/auth/jwt.strategy';
-import { PrismaService } from '@/infra/prisma/prisma.service';
+import { PrismaService } from '@/database/prisma/prisma.service';
 import z from 'zod';
 const createCheckInBodySchema = z.object({
   vehicleId: z.string(),

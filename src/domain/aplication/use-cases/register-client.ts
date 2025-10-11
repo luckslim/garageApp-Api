@@ -1,5 +1,6 @@
 import { Client } from "@/domain/enterprise/entities/client";
-import type { ClientRepository } from "../repositories/client-repository";
+import { ClientRepository } from "../repositories/client-repository";
+import { Inject, Injectable } from "@nestjs/common";
 
 interface RegisterClientUseCaseRequest {
   name: string;
@@ -9,8 +10,9 @@ interface RegisterClientUseCaseRequest {
 interface RegisterClientUseCaseResponse {
   client: Client;
 }
+@Injectable()
 export class RegisterClientUseCase {
-  constructor(private clientRepository: ClientRepository) {}
+  constructor(@Inject(ClientRepository) private clientRepository: ClientRepository) {}
   async execute({
     name,
     email,

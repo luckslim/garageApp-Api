@@ -3,15 +3,17 @@ import { FetchCheckInByUserController } from './controllers/fetch-checkin-contro
 import { CreateAccountController } from './controllers/create-account-controller';
 import { AuthenticateController } from './controllers/authenticate-controller';
 import { CreateCheckInController } from './controllers/create-checkin-controller';
-import { PrismaService } from '../prisma/prisma.service';
+import { DatabaseModule } from '@/database/database.module';
+import { RegisterClientUseCase } from '@/domain/aplication/use-cases/register-client';
 
 @Module({
+  imports: [DatabaseModule],
   controllers: [
     FetchCheckInByUserController,
     CreateAccountController,
     AuthenticateController,
     CreateCheckInController,
   ],
-  providers: [PrismaService],
+  providers:[RegisterClientUseCase]
 })
 export class HttpModule {}

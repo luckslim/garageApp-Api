@@ -6,7 +6,7 @@ export interface CheckInProps {
   vehicleId: string;
   vehiclePhoto: string;
   checkInAt: Date;
-  checkOutAt: Date;
+  checkOutAt?: Date | null;
 }
 export class CheckIn extends Entity<CheckInProps> {
   get clientId() {
