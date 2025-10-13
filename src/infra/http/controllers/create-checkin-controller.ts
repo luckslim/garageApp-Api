@@ -4,39 +4,40 @@ import {
   HttpCode,
   UnauthorizedException,
   UseGuards,
-  UsePipes,
 } from '@nestjs/common';
 import { Controller, Post } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import type { TokenPayloadSchema } from '@/infra/auth/jwt.strategy';
-import { PrismaService } from '@/database/prisma/prisma.service';
 import z from 'zod';
+import { CheckInClientUseCase } from '@/domain/aplication/use-cases/check-in';
 const createCheckInBodySchema = z.object({
   vehicleId: z.string(),
+  typeVehicle: z.string(),
+  vehiclePhoto: z.string(),
 });
 type CreateCheckInBodySchema = z.infer<typeof createCheckInBodySchema>;
 const bodyValidationPipe = new ZodValidationPipe(createCheckInBodySchema);
 @Controller('/checkin')
 @UseGuards(AuthGuard('jwt'))
 export class CreateCheckInController {
-  constructor(private prisma: PrismaService) {}
+  constructor(private checkInClientUsecase: CheckInClientUseCase) {}
   @Post()
   @HttpCode(201)
   async handle(
     @Body(bodyValidationPipe) body: CreateCheckInBodySchema,
     @CurrentUser() user: TokenPayloadSchema,
   ) {
+    const clientId = user.sub;
     if (!user) {
       throw new UnauthorizedException('Unauthorized');
     }
-    const { vehicleId } = body;
-    const checkin = await this.prisma.checkIn.create({
-      data: {
-        vehicleId,
-        clientId: user.sub,
-      },
+    const { vehicleId, typeVehicle, vehiclePhoto } = body;
+    await this.checkInClientUsecase.execute({
+      vehicleId,
+      clientId,
+      typeVehicle,
+      vehiclePhoto,
     });
-    return checkin;
   }
 }

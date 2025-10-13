@@ -36,18 +36,20 @@ describe('Create Checkin (E2E)', () => {
       },
     });
     const accessToken = jwt.sign({ sub: user.id });
+
     const response = await request(app.getHttpServer())
       .post('/checkin')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        vehicleId: 'rkl-9e96',
+        vehicleId: 'rkl-9t96',
+        typeVehicle: 'Moto',
+        vehiclePhoto: 'image.jpg',
       });
-
     expect(response.statusCode).toBe(201);
 
     const checkInOnDatabase = await prisma.checkIn.findFirst({
       where: {
-        vehicleId: 'rkl-9e96',
+        vehicleId: 'rkl-9t96',
       },
     });
 

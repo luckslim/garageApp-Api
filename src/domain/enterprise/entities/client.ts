@@ -29,17 +29,6 @@ export class Client extends Entity<ClientProps> {
   set password(password: string) {
     this.props.password = password;
   }
-  // changeName(name: string) {
-  //   this.props.name = name;
-  // }
-
-  // changeEmail(email: string) {
-  //   this.props.email = email;
-  // }
-
-  // changePassword(password: string) {
-  //   this.props.password = password;
-  // }
   static create(props: ClientProps, id?: UniqueEntityID) {
     const client = new Client(props, id);
     return client;

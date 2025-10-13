@@ -22,12 +22,17 @@ model User {
   CheckIn CheckIn[]
   @@map("users")
 }
-
+enum typeVehicle {
+  Moto
+  Car
+}
 model CheckIn {
   id String @id @default(uuid())
   clientId String
   client User @relation(fields: [clientId], references: [id])
   vehicleId String
+  typeVehicle typeVehicle 
+  photoVehicle String?
   createdAt DateTime @default(now())
   checkOut DateTime?
   @@map("check_in") 

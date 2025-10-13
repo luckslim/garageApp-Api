@@ -14,9 +14,9 @@ describe("register CheckIn", () => {
     const checkInId = MakeCheckIn();
     await sut.execute({
       clientId: checkInId.clientId?.toString(), // UniqueEntityID → string
-      typeVehicle: checkInId.typeVehicle,
+      typeVehicle: checkInId.typeVehicle ?? 'vehicle',
       vehicleId: checkInId.vehicleId,
-      vehiclePhoto: checkInId.vehiclePhoto ?? undefined,
+      vehiclePhoto: checkInId.vehiclePhoto ,
       checkInAt: checkInId.checkInAt,
       checkOutAt: checkInId.checkOutAt,
     });

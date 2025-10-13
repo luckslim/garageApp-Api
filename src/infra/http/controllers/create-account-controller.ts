@@ -24,23 +24,5 @@ export class CreateAccountController {
       email,
       password
     })
-    // const userWithSameEmail = await this.prisma.user.findUnique({
-    //   where: {
-    //     email,
-    //   },
-    // });
-    // if (userWithSameEmail) {
-    //   throw new ConflictException(
-    //     'user with same email address already exists',
-    //   );
-    // }
-    // const hashedPassord = await hash(password, 8);
-    // await this.prisma.user.create({
-    //   data: {
-    //     name,
-    //     email,
-    //     password: hashedPassord,
-    //   },
-    // });
   }
 }

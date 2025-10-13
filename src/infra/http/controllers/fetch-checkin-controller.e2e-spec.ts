@@ -26,23 +26,32 @@ describe('fetch Checkin (E2E)', () => {
   });
 
   test('[POST] /checkin', async () => {
-    // const user = await prisma.user.create({
-    //   data: {
-    //     name: 'John Doe',
-    //     email: 'johndoe@example.com',
-    //     password: '123456',
-    //   },
-    // });
-    // const accessToken = jwt.sign({ sub:user.id})
-    // const response = await request(app.getHttpServer())
-    //   .get('/checkins')
-    //   .set('Authorization', `Bearer ${accessToken}`)
-    // const result = await prisma.checkIn.findMany({
-    //     orderBy:{
-    //         createdAt: 'desc'
-    //     }
-    // })
-    // console.log(result)
-    // expect(response.statusCode).toBe(201);
+    const user = await prisma.user.create({
+      data: {
+        name: 'John Doe',
+        email: 'johndoe@example.com',
+        password: '123456',
+      },
+    });
+    const accessToken = jwt.sign({ sub: user.id });
+    await request(app.getHttpServer())
+      .post('/checkin')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({
+        vehicleId: 'rkl-9t96',
+        typeVehicle: 'Moto',
+        vehiclePhoto: 'image.jpg',
+      })
+      .expect(201);
+    const response = await request(app.getHttpServer())
+      .get('/checkins')
+      .set('Authorization', `Bearer ${accessToken}`);
+    const result = await prisma.checkIn.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    expect(response.statusCode).toBe(200);
   });
 });

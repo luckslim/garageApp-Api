@@ -3,6 +3,10 @@ import type { CheckIn } from "@/domain/enterprise/entities/check-in";
 
 export class InMemoryCheckInRepository implements CheckInRepository {
   public items: CheckIn[] = [];
+  async findByAll(): Promise<CheckIn[]> {
+    const allCheckIns = this.items
+    return allCheckIns
+  }
   async findById(vehicleId: string) {
     const clientCheckIn = this.items.find(
       (item) => item.vehicleId === vehicleId
