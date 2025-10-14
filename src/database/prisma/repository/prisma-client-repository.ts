@@ -1,8 +1,9 @@
 import { ClientRepository } from '@/domain/aplication/repositories/client-repository';
 import { Client } from '@/domain/enterprise/entities/client';
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
-import { PrismaClientMapper } from './mappers/prisma-client-mapper';
+import { PrismaService } from '../prisma.service';
+import { PrismaClientMapper } from '../mappers/prisma-client-mapper';
+
 
 @Injectable()
 export class PrismaClientRepository implements ClientRepository {

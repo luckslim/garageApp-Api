@@ -1,8 +1,9 @@
 import { CheckInRepository } from '@/domain/aplication/repositories/check-in-repository';
 import { CheckIn } from '@/domain/enterprise/entities/check-in';
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
-import { PrismaCheckInMapper } from './mappers/prisma-checkIn-mapper';
+import { PrismaService } from '../prisma.service';
+import { PrismaCheckInMapper } from '../mappers/prisma-checkIn-mapper';
+
 
 @Injectable()
 export class PrismaCheckInRepository implements CheckInRepository {

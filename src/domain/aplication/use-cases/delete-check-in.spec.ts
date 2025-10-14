@@ -22,8 +22,8 @@ describe("delete CheckIn", () => {
     });
     inMemoryCheckInRepository.items.push(checkInId);
     await sut.execute({
-      clientId: "lucas-Author",
-      vehicleId: "carro-1234",
+      clientId: checkInId.clientId,
+      vehicleId: checkInId.vehicleId,
     });
     expect(inMemoryCheckInRepository.items).toHaveLength(0);
   });
@@ -34,7 +34,7 @@ describe("delete CheckIn", () => {
     });
     inMemoryCheckInRepository.items.push(checkInId);
     const result = await sut.execute({
-      clientId: "another-id",
+      clientId: new UniqueEntityID("another-id"),
       vehicleId: "another-car",
     });
     expect(result.isLeft()).toBe(true)
