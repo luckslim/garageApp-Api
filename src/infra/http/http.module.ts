@@ -8,6 +8,8 @@ import { RegisterClientUseCase } from '@/domain/aplication/use-cases/register-cl
 import { CheckInClientUseCase } from '@/domain/aplication/use-cases/check-in';
 import { AuthenticateClientUseCase } from '@/domain/aplication/use-cases/authenticate-client';
 import { CryptographyModule } from '../cryptography/cryptography.module';
+import { DeleteClientUseCase } from '@/domain/aplication/use-cases/delete-client';
+import { DeleteAccountController } from './controllers/delete-account-controller';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -16,11 +18,13 @@ import { CryptographyModule } from '../cryptography/cryptography.module';
     CreateAccountController,
     AuthenticateController,
     CreateCheckInController,
+    DeleteAccountController,
   ],
   providers: [
     RegisterClientUseCase,
     CheckInClientUseCase,
     AuthenticateClientUseCase,
+    DeleteClientUseCase,
   ],
 })
 export class HttpModule {}

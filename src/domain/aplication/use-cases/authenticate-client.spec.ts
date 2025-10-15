@@ -46,6 +46,5 @@ describe("authenticate Client", () => {
       password: "another-password",
     });
     expect(result.isLeft()).toBe(true);
-    //expect(result.value).toBeInstanceOf(WrongCredentialsError)
   });
 });

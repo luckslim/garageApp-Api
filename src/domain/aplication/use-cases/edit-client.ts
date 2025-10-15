@@ -32,9 +32,6 @@ export class EditClientUseCase {
       return left(new NotAllowedError());
     }
     client.name = name
-    //client.changeName(name);
-    // client.changeEmail(email);
-    // client.changePassword(password);
     client.password = password
     client.email = email
     await this.clientRepository.save(client);

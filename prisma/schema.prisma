@@ -29,7 +29,7 @@ enum typeVehicle {
 model CheckIn {
   id String @id @default(uuid())
   clientId String
-  client User @relation(fields: [clientId], references: [id])
+  client User @relation(fields: [clientId], references: [id], onDelete: Cascade)
   vehicleId String
   typeVehicle typeVehicle 
   photoVehicle String?

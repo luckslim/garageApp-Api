@@ -3,11 +3,23 @@ import { Client } from '@/domain/enterprise/entities/client';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaClientMapper } from '../mappers/prisma-client-mapper';
-
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 
 @Injectable()
 export class PrismaClientRepository implements ClientRepository {
   constructor(private prisma: PrismaService) {}
+
+  async findById(clientId: UniqueEntityID): Promise<Client | null> {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        id: clientId.toString(),
+      },
+    });
+    if (!user) {
+      return null;
+    }
+    return PrismaClientMapper.toDomain(user);
+  }
 
   async findByEmail(email: string): Promise<Client | null> {
     const user = await this.prisma.user.findUnique({
