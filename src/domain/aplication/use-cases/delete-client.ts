@@ -6,22 +6,20 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ClientRepository } from "../repositories/client-repository";
 
 interface DeleteClientUseCaseRequest {
-  clientId: string;
-  email:string
+  id:string
 }
 type DeleteClientUseCaseResponse = Either<WrongCredentialsError, null>;
 @Injectable()
 export class DeleteClientUseCase {
   constructor(@Inject(ClientRepository) private clientRepository:ClientRepository) {}
   async execute({
-    clientId,
-    email
+    id
   }: DeleteClientUseCaseRequest): Promise<DeleteClientUseCaseResponse> {
-    const client = await this.clientRepository.findByEmail(email)
+    const client = await this.clientRepository.findById(id)
     if(!client){
         return left(new NotAllowedError())
     }
-    if(clientId!==client.clientId?.toString()){
+    if(id!==client.id?.toString()){
         return left(new NotAllowedError())
     }
     await this.clientRepository.deleteByEmail(client.email)

@@ -2,6 +2,7 @@ import { Client } from '@/domain/enterprise/entities/client';
 import { ClientRepository } from '../repositories/client-repository';
 import { Inject, Injectable } from '@nestjs/common';
 import { HashGenerator } from '../cryptography/hash-generator';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 
 interface RegisterClientUseCaseRequest {
   name: string;
@@ -24,6 +25,7 @@ export class RegisterClientUseCase {
   }: RegisterClientUseCaseRequest): Promise<RegisterClientUseCaseResponse> {
     const hashedPassword = await this.hashGenerator.hash(password);
     const clientId = Client.create({
+      clientId: new UniqueEntityID(),
       name,
       email,
       password: hashedPassword,

@@ -5,7 +5,6 @@ export class PrismaClientMapper {
   static toDomain(raw: PrismaClient): Client {
     return Client.create(
       {
-        clientId: new UniqueEntityID(raw.id),
         name: raw.name,
         email: raw.email,
         password: raw.password,

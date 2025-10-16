@@ -8,11 +8,10 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 @Injectable()
 export class PrismaClientRepository implements ClientRepository {
   constructor(private prisma: PrismaService) {}
-
-  async findById(clientId: UniqueEntityID): Promise<Client | null> {
+  async findById(id: string): Promise<Client | null> {
     const user = await this.prisma.user.findFirst({
       where: {
-        id: clientId.toString(),
+        id,
       },
     });
     if (!user) {
@@ -52,11 +51,12 @@ export class PrismaClientRepository implements ClientRepository {
 
   async save(client: Client): Promise<Client> {
     const data = PrismaClientMapper.toPrisma(client);
+    const {id, ...updateData} = data
     const user = await this.prisma.user.update({
       where: {
         id: data.id,
       },
-      data,
+      data: updateData,
     });
     return PrismaClientMapper.toDomain(user);
   }

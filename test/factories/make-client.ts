@@ -8,7 +8,6 @@ export function makeClient(
 ) {
   const client = Client.create(
     {
-      clientId: new UniqueEntityID(),
       name: faker.person.fullName(),
       email: faker.internet.email(),
       password: faker.internet.password(),

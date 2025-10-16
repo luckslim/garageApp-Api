@@ -13,8 +13,7 @@ describe("edit client", () => {
     sut = new EditClientUseCase(inMemoryClientRepository);
   });
   it("should be able to edit a client", async () => {
-    const client = makeClient({
-      clientId: new UniqueEntityID("lucas-123"),
+    const client =  makeClient({
       email: "lucaslima78@hotmail.com",
       name: "lucas",
     });
@@ -22,7 +21,7 @@ describe("edit client", () => {
     inMemoryClientRepository.items.push(client);
 
     await sut.execute({
-      clientId: "lucas-123",
+      id: client.id.toString(),
       email: "lucaslima78@hotmail.com",
       name: "teste",
       password: "teste-123",
@@ -35,12 +34,11 @@ describe("edit client", () => {
   });
   it("should not be able to delete another user", async () => {
     const client = makeClient({
-      clientId: new UniqueEntityID("lucas-123"),
       email: "lucaslima78@hotmail.com",
     });
     inMemoryClientRepository.items.push(client);
     const result = await sut.execute({
-      clientId: "lucas-123",
+      id: new UniqueEntityID('lucas-Id').toString(),
       email: "another-user@hotmail.com",
       name: "another",
       password: "another-123",

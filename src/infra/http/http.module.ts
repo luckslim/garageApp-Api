@@ -10,6 +10,8 @@ import { AuthenticateClientUseCase } from '@/domain/aplication/use-cases/authent
 import { CryptographyModule } from '../cryptography/cryptography.module';
 import { DeleteClientUseCase } from '@/domain/aplication/use-cases/delete-client';
 import { DeleteAccountController } from './controllers/delete-account-controller';
+import { EditClientUseCase } from '@/domain/aplication/use-cases/edit-client';
+import { EditAccountController } from './controllers/edit-account-controller';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -19,12 +21,14 @@ import { DeleteAccountController } from './controllers/delete-account-controller
     AuthenticateController,
     CreateCheckInController,
     DeleteAccountController,
+    EditAccountController
   ],
   providers: [
     RegisterClientUseCase,
     CheckInClientUseCase,
     AuthenticateClientUseCase,
     DeleteClientUseCase,
+    EditClientUseCase
   ],
 })
 export class HttpModule {}

@@ -2,15 +2,11 @@ import { Entity } from "@/core/entities/entity";
 import type { UniqueEntityID } from "@/core/entities/unique-entity-id";
 
 export interface ClientProps {
-  clientId?: UniqueEntityID;
   name: string;
   email: string;
   password: string;
 }
 export class Client extends Entity<ClientProps> {
-  get clientId() {
-    return this.props.clientId;
-  }
   get name() {
     return this.props.name;
   }

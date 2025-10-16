@@ -4,8 +4,8 @@ import type { Client } from '@/domain/enterprise/entities/client';
 
 export class InMemoryClientRepository implements ClientRepository {
   public items: Client[] = [];
-  async findById(clientId: UniqueEntityID) {
-    const result = this.items.find((item) => item.clientId === clientId);
+  async findById(id: string) {
+    const result = this.items.find((item) => item.id.toString() == id.toString());
     if (!result) {
       return null;
     }
