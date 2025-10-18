@@ -9,7 +9,7 @@ import { Test } from '@nestjs/testing';
 
 import request from 'supertest';
 
-describe('fetch Checkin (E2E)', () => {
+describe('Delete Account (E2E)', () => {
   let app: INestApplication;
 
   let prisma: PrismaService;
@@ -33,25 +33,29 @@ describe('fetch Checkin (E2E)', () => {
         password: '123456',
       },
     });
-    const accessToken = jwt.sign({ sub: user.id });
-    await request(app.getHttpServer())
-      .post('/checkin')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        vehicleId: 'rkl-9t96',
+
+    const checkIn = await prisma.checkIn.create({
+      data: {
+        vehicleId: 'rkl-9e96',
         typeVehicle: 'Moto',
-        vehiclePhoto: 'image.jpg',
-      })
-      .expect(201);
-    const response = await request(app.getHttpServer())
-      .get('/checkins')
-      .set('Authorization', `Bearer ${accessToken}`);
-    const result = await prisma.checkIn.findMany({
-      orderBy: {
-        createdAt: 'desc',
+        photoVehicle:'foto.png',
+        clientId: user.id,
       },
     });
 
-    expect(response.statusCode).toBe(200);
+    const accessToken = jwt.sign({ sub: user.id });
+
+    const response = await request(app.getHttpServer())
+      .post('/delete/checkin')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send({ id: checkIn.id });
+
+    expect(response.statusCode).toBe(201);
+
+    const checkInOnDatabase = await prisma.checkIn.findUnique({
+      where: { id: checkIn.id },
+    });
+
+    expect(checkInOnDatabase).toBeNull();
   });
 });

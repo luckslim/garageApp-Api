@@ -6,7 +6,7 @@ export class PrismaCheckInMapper {
   static toDomain(raw: PrismaCheckIn): CheckIn {
     return CheckIn.create(
       {
-        clientId: new UniqueEntityID(raw.clientId),
+        clientId: raw.clientId,
         vehicleId: raw.vehicleId,
         checkInAt: raw.createdAt,
         checkOutAt: raw.checkOut ?? undefined,

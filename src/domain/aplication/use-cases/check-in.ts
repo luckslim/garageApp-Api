@@ -6,7 +6,7 @@ import { CheckInRepository } from '../repositories/check-in-repository';
 import { Inject, Injectable } from '@nestjs/common';
 
 interface CheckInClientUseCaseRequest {
-  clientId: string;
+  clientId: string
   typeVehicle: string;
   vehicleId: string;
   vehiclePhoto: string;
@@ -27,7 +27,7 @@ export class CheckInClientUseCase {
     typeVehicle,
   }: CheckInClientUseCaseRequest): Promise<CheckInClientUseCaseResponse> {
     const checkInId = CheckIn.create({
-      clientId: new UniqueEntityID(clientId),
+      clientId,
       vehicleId,
       vehiclePhoto,
       typeVehicle,

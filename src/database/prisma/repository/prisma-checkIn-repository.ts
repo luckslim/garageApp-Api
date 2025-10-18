@@ -3,27 +3,37 @@ import { CheckIn } from '@/domain/enterprise/entities/check-in';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaCheckInMapper } from '../mappers/prisma-checkIn-mapper';
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 
 @Injectable()
 export class PrismaCheckInRepository implements CheckInRepository {
   constructor(private prisma: PrismaService) {}
-  findByVehicleId(vehicleId: string): Promise<CheckIn | null> {
-    throw new Error('Method not implemented.');
-  }
   findByAll(): Promise<CheckIn[]> {
     throw new Error('Method not implemented.');
   }
-  async findById(clientId: UniqueEntityID): Promise<CheckIn | null> {
-    const user = await this.prisma.checkIn.findFirst({
-      where: {
-        clientId: clientId.toString(),
-      },
-    });
-    if (!user) {
-      return null;
+  findByVehicleId(vehicleId: string): Promise<CheckIn | null> {
+    throw new Error('Method not implemented.');
+  }
+  async findByClientId(clientId: string): Promise<CheckIn | null> {
+    const checkin =  await this.prisma.checkIn.findFirst({
+      where:{
+        clientId
+      }
+    })
+    if(!checkin){
+      return null
     }
-    return PrismaCheckInMapper.toDomain(user);
+    return PrismaCheckInMapper.toDomain(checkin)
+  }
+  async findByCheckInId(checkInId: string): Promise<CheckIn | null> {
+    const checkIn = await this.prisma.checkIn.findFirst({
+      where:{
+        id: checkInId
+      }
+    })
+    if(!checkIn){
+      return null
+    }
+    return PrismaCheckInMapper.toDomain(checkIn)
   }
   async create(checkIn: CheckIn): Promise<CheckIn> {
     const data = PrismaCheckInMapper.toPrisma(checkIn);
@@ -32,11 +42,10 @@ export class PrismaCheckInRepository implements CheckInRepository {
     });
     return PrismaCheckInMapper.toDomain(user);
   }
-  async delete(checkIn: CheckIn): Promise<null> {
-    const data = PrismaCheckInMapper.toPrisma(checkIn);
+  async delete(checkInId: string): Promise<null> {
     await this.prisma.checkIn.delete({
       where: {
-        id: data.id,
+        id: checkInId,
       },
     });
     return null;

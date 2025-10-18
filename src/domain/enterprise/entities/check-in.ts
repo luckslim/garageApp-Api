@@ -2,7 +2,7 @@ import { Entity } from '@/core/entities/entity';
 import type { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Optional } from '@/core/types/optional';
 export interface CheckInProps {
-  clientId: UniqueEntityID;
+  clientId: string;
   typeVehicle?: string;
   vehicleId: string;
   vehiclePhoto: string;
@@ -33,7 +33,10 @@ export class CheckIn extends Entity<CheckInProps> {
     id?: UniqueEntityID,
   ) {
     const checkIn = new CheckIn(
-      { ...props, checkInAt: props.checkInAt ?? new Date(), checkOutAt: props.checkOutAt ?? new Date() },
+      {
+        ...props,
+        checkOutAt: props.checkOutAt ?? new Date(),
+      },
       id,
     );
     return checkIn;

@@ -8,7 +8,6 @@ import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 
 import request from 'supertest';
-import { email } from 'zod';
 
 describe('Delete Account (E2E)', () => {
   let app: INestApplication;
@@ -41,8 +40,7 @@ describe('Delete Account (E2E)', () => {
       .post('/delete/accounts')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        clientId: user.id,
-        email:"johndoe@example.com"
+        id: user.id
       });
     expect(response.statusCode).toBe(201);
   });

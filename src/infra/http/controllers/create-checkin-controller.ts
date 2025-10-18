@@ -34,8 +34,8 @@ export class CreateCheckInController {
     }
     const { vehicleId, typeVehicle, vehiclePhoto } = body;
     await this.checkInClientUsecase.execute({
-      vehicleId,
       clientId,
+      vehicleId,
       typeVehicle,
       vehiclePhoto,
     });

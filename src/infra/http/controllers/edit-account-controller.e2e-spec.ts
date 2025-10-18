@@ -9,8 +9,7 @@ import { Test } from '@nestjs/testing';
 
 import request from 'supertest';
 
-
-describe('Delete Account (E2E)', () => {
+describe('Edit Account (E2E)', () => {
   let app: INestApplication;
 
   let prisma: PrismaService;
@@ -37,19 +36,17 @@ describe('Delete Account (E2E)', () => {
     const response = await request(app.getHttpServer())
       .post('/edit/accounts')
       .send({
-        id : user.id,
-        email:"teste@example.com",
-        name:"teste de nome",
-        password:"123123"        
+        id: user.id,
+        email: 'teste@example.com',
+        name: 'teste de nome',
+        password: '123123',
+      });
+    await prisma.user.findUnique({
+      where: {
+        id: user.id,
+      },
     });
-    console.log(response.body)
-    const newUser = await prisma.user.findUnique({
-        where:{
-            id: user.id
-        }
-    })
-    console.log(newUser)
-    //expect(newUser?.email).toBe("teste@example.com")
+
     expect(response.statusCode).toBe(201);
   });
 });

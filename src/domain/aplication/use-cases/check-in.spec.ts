@@ -13,12 +13,10 @@ describe("register CheckIn", () => {
   it("should be able to register a new checkIn", async () => {
     const checkInId = MakeCheckIn();
     await sut.execute({
-      clientId: checkInId.clientId?.toString(), // UniqueEntityID → string
+      clientId: checkInId.clientId,
       typeVehicle: checkInId.typeVehicle ?? 'vehicle',
       vehicleId: checkInId.vehicleId,
       vehiclePhoto: checkInId.vehiclePhoto ,
-      checkInAt: checkInId.checkInAt,
-      checkOutAt: checkInId.checkOutAt,
     });
     const checkIn = inMemoryCheckInRepository.items[0]
     expect(checkIn).toBeTruthy()

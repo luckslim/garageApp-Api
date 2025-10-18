@@ -25,7 +25,6 @@ export class RegisterClientUseCase {
   }: RegisterClientUseCaseRequest): Promise<RegisterClientUseCaseResponse> {
     const hashedPassword = await this.hashGenerator.hash(password);
     const clientId = Client.create({
-      clientId: new UniqueEntityID(),
       name,
       email,
       password: hashedPassword,

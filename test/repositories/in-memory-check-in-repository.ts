@@ -1,5 +1,3 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
-import { PaginationParams } from '@/core/repositories/pagination-params';
 import type { CheckInRepository } from '@/domain/aplication/repositories/check-in-repository';
 import type { CheckIn } from '@/domain/enterprise/entities/check-in';
 
@@ -16,26 +14,24 @@ export class InMemoryCheckInRepository implements CheckInRepository {
     const allCheckIns = this.items;
     return allCheckIns;
   }
-  async findById(clientId: UniqueEntityID) {
+  async findByClientId(clientId: string) {
     const clientCheckIn = this.items.find((item) => item.clientId === clientId);
     if (!clientCheckIn) {
       return null;
     }
     return clientCheckIn;
   }
-  // async findById(clientId: UniqueEntityID, { page }: PaginationParams) {
-  //   const clientCheckIn = this.items
-  //     .filter((item) => item.clientId === clientId)
-  //     .slice((page - 1) * 20, page * 20);
-  //   if (!clientCheckIn) {
-  //     return null;
-  //   }
-  //   return clientCheckIn;
-  // }
-  async delete(checkIn: CheckIn) {
-    const itemIndex = this.items.findIndex(
-      (item) => item.clientId === checkIn.clientId,
+  async findByCheckInId(checkInId: string): Promise<CheckIn | null> {
+    const checkInIdFind = this.items.find(
+      (item) => item.id.toString() === checkInId,
     );
+    if (!checkInIdFind) {
+      return null;
+    }
+    return checkInIdFind;
+  }
+  async delete(Id: string) {
+    const itemIndex = this.items.findIndex((item) => item.id.toString() === Id);
     this.items.splice(itemIndex, 1);
     return null;
   }

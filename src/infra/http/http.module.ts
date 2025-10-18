@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { FetchCheckInByUserController } from './controllers/fetch-checkin-controller';
 import { CreateAccountController } from './controllers/create-account-controller';
 import { AuthenticateController } from './controllers/authenticate-controller';
 import { CreateCheckInController } from './controllers/create-checkin-controller';
@@ -12,23 +11,26 @@ import { DeleteClientUseCase } from '@/domain/aplication/use-cases/delete-client
 import { DeleteAccountController } from './controllers/delete-account-controller';
 import { EditClientUseCase } from '@/domain/aplication/use-cases/edit-client';
 import { EditAccountController } from './controllers/edit-account-controller';
+import { DeleteCheckInController } from './controllers/delete-checkin-controller';
+import { DeleteCheckInClientUseCase } from '@/domain/aplication/use-cases/delete-check-in';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
   controllers: [
-    FetchCheckInByUserController,
     CreateAccountController,
     AuthenticateController,
     CreateCheckInController,
     DeleteAccountController,
-    EditAccountController
+    EditAccountController,
+    DeleteCheckInController
   ],
   providers: [
     RegisterClientUseCase,
     CheckInClientUseCase,
     AuthenticateClientUseCase,
     DeleteClientUseCase,
-    EditClientUseCase
+    EditClientUseCase,
+    DeleteCheckInClientUseCase
   ],
 })
 export class HttpModule {}
