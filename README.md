@@ -20,6 +20,17 @@ Ele segue os princípios da **Clean Architecture**, garantindo independência de
 
 ---
 
+OBS: Para rodar este projeto localmente, você precisa criar um arquivo .env e definir as seguintes variáveis:
+```bash
+# use docker compose para criar o container
+DATABASE_URL → URL de conexão com o banco de dados (utilizando as configurações do Docker).
+
+# use os arquivos.txt na raiz do projeto 
+JWT_PUBLIC_KEY → Chave pública para assinatura de tokens JWT.
+
+JWT_PRIVATE_KEY → Chave privada para assinatura de tokens JWT.
+
+```
 ## 🧰 Tecnologias e Ferramentas
 
 - ⚙️ **NestJS** → Framework Node.js modular e escalável.  
@@ -46,3 +57,5 @@ $ npm run start:dev
 
 # Build de produção
 $ npm run start:prod
+
+
