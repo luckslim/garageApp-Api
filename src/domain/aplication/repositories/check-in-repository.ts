@@ -1,5 +1,3 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
-import { PaginationParams } from '@/core/repositories/pagination-params';
 import type { CheckIn } from '@/domain/enterprise/entities/check-in';
 
 export abstract class CheckInRepository {

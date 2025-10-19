@@ -8,8 +8,9 @@ import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 
 import request from 'supertest';
+import { makeClient } from 'test/factories/make-client';
 
-describe('Create Checkin (E2E)', () => {
+describe('Upload File (E2E)', () => {
   let app: INestApplication;
 
   let prisma: PrismaService;
@@ -25,33 +26,21 @@ describe('Create Checkin (E2E)', () => {
     await app.init();
   });
 
-  test('[POST] /checkin', async () => {
+  test('[POST] /upload', async () => {
     const user = await prisma.user.create({
       data: {
         name: 'John Doe',
-
         email: 'johndoe@example.com',
-
         password: '123456',
       },
     });
+    expect(user).toBeTruthy();
     const accessToken = jwt.sign({ sub: user.id });
-
     const response = await request(app.getHttpServer())
-      .post('/checkin')
+      .post('/upload')
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        vehicleId:"rkl-9e96",
-        typeVehicle:"Moto",
-        vehiclePhoto:"photo.png"
-      });
-    expect(response.statusCode).toBe(201);
+      .attach('file','./test/e2e/google.png')
+    expect(response.statusCode).toBe(201)
 
-    const checkInOnDatabase = await prisma.checkIn.findFirst({
-      where: {
-        vehicleId: 'rkl-9e96',
-      },
-    });
-    expect(checkInOnDatabase).toBeTruthy();
   });
 });

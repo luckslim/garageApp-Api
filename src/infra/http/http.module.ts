@@ -13,10 +13,12 @@ import { EditClientUseCase } from '@/domain/aplication/use-cases/edit-client';
 import { EditAccountController } from './controllers/edit-account-controller';
 import { DeleteCheckInController } from './controllers/delete-checkin-controller';
 import { DeleteCheckInClientUseCase } from '@/domain/aplication/use-cases/delete-check-in';
+import { UploadFileController } from './controllers/upload-files.controller';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
   controllers: [
+    UploadFileController,
     CreateAccountController,
     AuthenticateController,
     CreateCheckInController,

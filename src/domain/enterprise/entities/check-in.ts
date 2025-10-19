@@ -35,7 +35,7 @@ export class CheckIn extends Entity<CheckInProps> {
     const checkIn = new CheckIn(
       {
         ...props,
-        checkOutAt: props.checkOutAt ?? new Date(),
+        checkInAt: props.checkOutAt ?? new Date(),
       },
       id,
     );
