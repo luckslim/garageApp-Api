@@ -24,8 +24,21 @@ CREATE TABLE "check_in" (
     CONSTRAINT "check_in_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "files" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "url" TEXT NOT NULL,
+    "checkInId" TEXT,
+
+    CONSTRAINT "files_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- AddForeignKey
 ALTER TABLE "check_in" ADD CONSTRAINT "check_in_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "files" ADD CONSTRAINT "files_checkInId_fkey" FOREIGN KEY ("checkInId") REFERENCES "check_in"("id") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -14,9 +14,11 @@ import { EditAccountController } from './controllers/edit-account-controller';
 import { DeleteCheckInController } from './controllers/delete-checkin-controller';
 import { DeleteCheckInClientUseCase } from '@/domain/aplication/use-cases/delete-check-in';
 import { UploadFileController } from './controllers/upload-files.controller';
+import { StorageModule } from '../storage/storage.module';
+import { UploadAndCreateUseCase } from '@/domain/aplication/use-cases/upload-and-create-files';
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule],
+  imports: [DatabaseModule, CryptographyModule, StorageModule],
   controllers: [
     UploadFileController,
     CreateAccountController,
@@ -32,7 +34,8 @@ import { UploadFileController } from './controllers/upload-files.controller';
     AuthenticateClientUseCase,
     DeleteClientUseCase,
     EditClientUseCase,
-    DeleteCheckInClientUseCase
+    DeleteCheckInClientUseCase,
+    UploadAndCreateUseCase,
   ],
 })
 export class HttpModule {}

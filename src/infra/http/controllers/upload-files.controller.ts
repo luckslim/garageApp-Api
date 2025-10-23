@@ -1,22 +1,22 @@
+import { UploadAndCreateUseCase } from '@/domain/aplication/use-cases/upload-and-create-files';
 import {
+  BadRequestException,
   Controller,
   FileTypeValidator,
   HttpCode,
   MaxFileSizeValidator,
   ParseFilePipe,
-  Post,
-  UploadedFile,
+  Post, UploadedFile,
   UseGuards,
-  UseInterceptors,
+  UseInterceptors
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('/upload')
 @UseGuards(AuthGuard('jwt'))
-
 export class UploadFileController {
-  //constructor() {}
+  constructor(private uploadAndCreateFile: UploadAndCreateUseCase) {}
   @Post()
   @HttpCode(201)
   @UseInterceptors(FileInterceptor('file'))
@@ -30,5 +30,18 @@ export class UploadFileController {
       }),
     )
     file: Express.Multer.File,
-  ) { console.log(file)}
+  ) {
+    const result = await this.uploadAndCreateFile.execute({
+      fileName: file.originalname,
+      fileType: file.mimetype,
+      body: file.buffer,
+    });
+    if(result.isLeft()){
+      throw new BadRequestException()
+    }
+    const {files} = result.value
+    return {
+       fileId: files.id.toString()
+    }
+  }
 }

@@ -41,6 +41,5 @@ describe('Upload File (E2E)', () => {
       .set('Authorization', `Bearer ${accessToken}`)
       .attach('file','./test/e2e/google.png')
     expect(response.statusCode).toBe(201)
-
   });
 });
