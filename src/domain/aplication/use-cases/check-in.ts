@@ -1,15 +1,17 @@
 import { right, type Either } from '@/core/either';
 import { WrongCredentialsError } from './errors/wrong-credentials-error';
 import { CheckIn } from '@/domain/enterprise/entities/check-in';
-import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { CheckInRepository } from '../repositories/check-in-repository';
 import { Inject, Injectable } from '@nestjs/common';
+import { CheckInFiles } from '@/domain/enterprise/entities/checkIn-file';
+import { UniqueEntityID } from '@/core/entities/unique-entity-id';
 
 interface CheckInClientUseCaseRequest {
-  clientId: string
+  clientId: string;
   typeVehicle: string;
   vehicleId: string;
   vehiclePhoto: string;
+  fileIds: string[];
 }
 type CheckInClientUseCaseResponse = Either<
   WrongCredentialsError,
@@ -25,6 +27,7 @@ export class CheckInClientUseCase {
     vehicleId,
     vehiclePhoto,
     typeVehicle,
+    fileIds,
   }: CheckInClientUseCaseRequest): Promise<CheckInClientUseCaseResponse> {
     const checkInId = CheckIn.create({
       clientId,
@@ -32,6 +35,14 @@ export class CheckInClientUseCase {
       vehiclePhoto,
       typeVehicle,
     });
+    const checkInFiles = fileIds.map((fileId) => {
+      return CheckInFiles.create({
+        fileId: new UniqueEntityID(fileId),
+        checkInId: checkInId.id,
+      });
+    });
+    
+    checkInId.file = checkInFiles
     const checkIn = await this.checkInRepository.create(checkInId);
     return right({
       checkIn,
