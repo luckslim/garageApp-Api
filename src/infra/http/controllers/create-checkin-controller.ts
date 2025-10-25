@@ -38,6 +38,7 @@ export class CreateCheckInController {
       vehicleId,
       typeVehicle,
       vehiclePhoto,
+      fileIds: [],
     });
   }
 }

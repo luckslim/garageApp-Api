@@ -1,8 +1,10 @@
+import { CheckInFilesRepository } from '@/domain/aplication/repositories/check-in-files-repository';
 import type { CheckInRepository } from '@/domain/aplication/repositories/check-in-repository';
 import type { CheckIn } from '@/domain/enterprise/entities/check-in';
 
 export class InMemoryCheckInRepository implements CheckInRepository {
   public items: CheckIn[] = [];
+  constructor(private checkInFilesRepository: CheckInFilesRepository) {}
   async findByVehicleId(vehicleId: string) {
     const checkIn = this.items.find((item) => item.vehicleId === vehicleId);
     if (!checkIn) {
@@ -33,10 +35,16 @@ export class InMemoryCheckInRepository implements CheckInRepository {
   async delete(Id: string) {
     const itemIndex = this.items.findIndex((item) => item.id.toString() === Id);
     this.items.splice(itemIndex, 1);
+    this.checkInFilesRepository.deleteManyByCheckInId(Id)
     return null;
   }
   async create(checkIn: CheckIn) {
     this.items.push(checkIn);
+    return checkIn;
+  }
+  async save(checkIn: CheckIn): Promise<CheckIn> {
+    const itemIndex = this.items.findIndex((item) => item.id === checkIn.id);
+    this.items[itemIndex] = checkIn;
     return checkIn;
   }
 }

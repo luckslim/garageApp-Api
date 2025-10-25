@@ -16,7 +16,6 @@ export function MakeCheckIn(
       vehicleId: faker.lorem.word(),
       vehiclePhoto: faker.lorem.word(),
       checkInAt: faker.date.anytime(),
-      checkOutAt: faker.date.anytime() ?? null,
       ...override,
     },
     id,

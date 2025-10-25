@@ -1,14 +1,13 @@
 import { AggregateRoot } from '@/core/entities/aggregate-root';
 import type { UniqueEntityID } from '@/core/entities/unique-entity-id';
 import { Optional } from '@/core/types/optional';
-import { Files } from './files';
-import { CheckInFiles } from './checkIn-file';
+import { CheckInFileWatchedList } from './checkIn-file-watched-list';
 export interface CheckInProps {
   clientId: string;
-  typeVehicle?: string;
+  typeVehicle: string;
   vehicleId: string;
   vehiclePhoto: string;
-  file: CheckInFiles[];
+  file: CheckInFileWatchedList;
   checkInAt?: Date;
   checkOutAt?: Date;
 }
@@ -34,8 +33,14 @@ export class CheckIn extends AggregateRoot<CheckInProps> {
   get checkOutAt() {
     return this.props.checkOutAt;
   }
-  set file(file: CheckInFiles[]) {
-    this.props.file = file
+  set file(file: CheckInFileWatchedList) {
+    this.props.file = file;
+  }
+  set typeVehicle(typeVehicle: string) {
+    this.props.typeVehicle = typeVehicle;
+  }
+  set vehicleId(vehicleId: string) {
+    this.props.vehicleId = vehicleId;
   }
   static create(
     props: Optional<CheckInProps, 'checkInAt' | 'checkOutAt' | 'file'>,
@@ -44,7 +49,7 @@ export class CheckIn extends AggregateRoot<CheckInProps> {
     const checkIn = new CheckIn(
       {
         ...props,
-        file: props.file ?? [],
+        file: props.file ?? new CheckInFileWatchedList(),
         checkInAt: props.checkOutAt ?? new Date(),
       },
       id,

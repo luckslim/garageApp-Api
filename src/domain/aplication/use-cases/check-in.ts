@@ -5,6 +5,7 @@ import { CheckInRepository } from '../repositories/check-in-repository';
 import { Inject, Injectable } from '@nestjs/common';
 import { CheckInFiles } from '@/domain/enterprise/entities/checkIn-file';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { CheckInFileWatchedList } from '@/domain/enterprise/entities/checkIn-file-watched-list';
 
 interface CheckInClientUseCaseRequest {
   clientId: string;
@@ -42,7 +43,7 @@ export class CheckInClientUseCase {
       });
     });
     
-    checkInId.file = checkInFiles
+    checkInId.file = new CheckInFileWatchedList(checkInFiles)
     const checkIn = await this.checkInRepository.create(checkInId);
     return right({
       checkIn,

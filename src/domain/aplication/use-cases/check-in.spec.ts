@@ -2,13 +2,19 @@ import { InMemoryCheckInRepository } from '../../../../test/repositories/in-memo
 import { CheckInClientUseCase } from './check-in';
 import { MakeCheckIn } from '../../../../test/factories/make-checkIn';
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
+import { InMemoryCheckInFilesRepository } from 'test/repositories/in-memory-check-in-files-repository';
 
 let inMemoryCheckInRepository: InMemoryCheckInRepository;
+let inMemoryCheckInFilesRepository: InMemoryCheckInFilesRepository;
 let sut: CheckInClientUseCase;
 
 describe('register CheckIn', () => {
   beforeEach(() => {
-    inMemoryCheckInRepository = new InMemoryCheckInRepository();
+    inMemoryCheckInFilesRepository = new InMemoryCheckInFilesRepository();
+    inMemoryCheckInRepository = new InMemoryCheckInRepository(
+      inMemoryCheckInFilesRepository,
+    );
+
     sut = new CheckInClientUseCase(inMemoryCheckInRepository);
   });
   it('should be able to register a new checkIn', async () => {
@@ -23,7 +29,7 @@ describe('register CheckIn', () => {
 
     const checkIn = inMemoryCheckInRepository.items[0];
     expect(checkIn).toBeTruthy();
-    expect(checkIn.file).toEqual([
+    expect(checkIn.file.currentItems).toEqual([
       expect.objectContaining({ fileId: new UniqueEntityID('1') }),
       expect.objectContaining({ fileId: new UniqueEntityID('2') }),
     ]);
