@@ -34,4 +34,18 @@ describe('register CheckIn', () => {
       expect.objectContaining({ fileId: new UniqueEntityID('2') }),
     ]);
   });
+    it('should persist files when creating a new checkIn', async () => {
+    const checkInId = MakeCheckIn();
+    await sut.execute({
+      clientId: checkInId.clientId,
+      typeVehicle: checkInId.typeVehicle ?? 'vehicle',
+      vehicleId: checkInId.vehicleId,
+      vehiclePhoto: checkInId.vehiclePhoto,
+      fileIds: ['1', '2'],
+    });
+
+    const checkIn = inMemoryCheckInRepository.items[0];
+    expect(checkIn).toBeTruthy();
+    expect(inMemoryCheckInFilesRepository.items).toHaveLength(2)
+  });
 });

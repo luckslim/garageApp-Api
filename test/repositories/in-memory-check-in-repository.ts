@@ -35,16 +35,20 @@ export class InMemoryCheckInRepository implements CheckInRepository {
   async delete(Id: string) {
     const itemIndex = this.items.findIndex((item) => item.id.toString() === Id);
     this.items.splice(itemIndex, 1);
-    this.checkInFilesRepository.deleteManyByCheckInId(Id)
+    this.checkInFilesRepository.deleteManyByCheckInId(Id);
     return null;
   }
   async create(checkIn: CheckIn) {
     this.items.push(checkIn);
+    await this.checkInFilesRepository.createMany(checkIn.file.getItems());
     return checkIn;
   }
   async save(checkIn: CheckIn): Promise<CheckIn> {
     const itemIndex = this.items.findIndex((item) => item.id === checkIn.id);
     this.items[itemIndex] = checkIn;
+    await this.checkInFilesRepository.createMany(checkIn.file.getNewItems());
+    await this.checkInFilesRepository.deleteMany(checkIn.file.getRemovedItems());
+
     return checkIn;
   }
 }

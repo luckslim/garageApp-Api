@@ -9,10 +9,20 @@ export class InMemoryCheckInFilesRepository implements CheckInFilesRepository {
     );
     return checkInFiles;
   }
-   async deleteManyByCheckInId(CheckInId: string): Promise<void> {
+  async deleteManyByCheckInId(CheckInId: string): Promise<void> {
     const checkInFiles = this.items.filter(
       (item) => item.checkInId.toString() !== CheckInId,
     );
+    this.items = checkInFiles
+  }
+  async createMany(files: CheckInFiles[]): Promise<void> {
+    this.items.push(...files)
+  }
+  async deleteMany(files: CheckInFiles[]): Promise<void> {
+    const checkInFiles = this.items.filter((item)=>
+    {
+      return !files.some((file)=>file.equals(item))
+    })
     this.items = checkInFiles
   }
 }
