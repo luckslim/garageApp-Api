@@ -6,14 +6,26 @@ import { PrismaClientRepository } from './prisma/repository/prisma-client-reposi
 import { PrismaCheckInRepository } from './prisma/repository/prisma-checkIn-repository';
 import { FileRepository } from '@/domain/aplication/repositories/file-repository';
 import { PrismaFileRepository } from './prisma/repository/prisma-files-repository';
+import { CheckInFilesRepository } from '@/domain/aplication/repositories/check-in-files-repository';
+import { PrismaCheckInFilesRespository } from './prisma/repository/prisma-checkIn-files-repository';
 
 @Module({
   providers: [
     PrismaService,
     { provide: ClientRepository, useClass: PrismaClientRepository },
     { provide: CheckInRepository, useClass: PrismaCheckInRepository },
-    {provide: FileRepository, useClass: PrismaFileRepository}
+    {
+      provide: CheckInFilesRepository,
+      useClass: PrismaCheckInFilesRespository,
+    },
+    { provide: FileRepository, useClass: PrismaFileRepository },
   ],
-  exports: [PrismaService, ClientRepository, CheckInRepository, FileRepository],
+  exports: [
+    PrismaService,
+    ClientRepository,
+    CheckInRepository,
+    FileRepository,
+    CheckInFilesRepository,
+  ],
 })
 export class DatabaseModule {}

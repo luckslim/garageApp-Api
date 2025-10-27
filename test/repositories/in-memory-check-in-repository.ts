@@ -43,12 +43,11 @@ export class InMemoryCheckInRepository implements CheckInRepository {
     await this.checkInFilesRepository.createMany(checkIn.file.getItems());
     return checkIn;
   }
-  async save(checkIn: CheckIn): Promise<CheckIn> {
+  async save(checkIn: CheckIn): Promise<void> {
     const itemIndex = this.items.findIndex((item) => item.id === checkIn.id);
     this.items[itemIndex] = checkIn;
     await this.checkInFilesRepository.createMany(checkIn.file.getNewItems());
     await this.checkInFilesRepository.deleteMany(checkIn.file.getRemovedItems());
 
-    return checkIn;
   }
 }

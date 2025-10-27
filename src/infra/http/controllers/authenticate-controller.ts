@@ -7,7 +7,7 @@ import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcryptjs';
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipes';
-import { PrismaService } from '@/database/prisma/prisma.service';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { z } from 'zod';
 import { AuthenticateClientUseCase } from '@/domain/aplication/use-cases/authenticate-client';
 const authenticateBodySchema = z.object({

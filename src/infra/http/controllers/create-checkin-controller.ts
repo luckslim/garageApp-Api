@@ -15,6 +15,7 @@ const createCheckInBodySchema = z.object({
   vehicleId: z.string(),
   typeVehicle: z.string(),
   vehiclePhoto: z.string(),
+  files: z.array(z.string())
 });
 type CreateCheckInBodySchema = z.infer<typeof createCheckInBodySchema>;
 const bodyValidationPipe = new ZodValidationPipe(createCheckInBodySchema);
@@ -32,13 +33,13 @@ export class CreateCheckInController {
     if (!user) {
       throw new UnauthorizedException('Unauthorized');
     }
-    const { vehicleId, typeVehicle, vehiclePhoto } = body;
+    const { vehicleId, typeVehicle, vehiclePhoto, files } = body;
     await this.checkInClientUsecase.execute({
       clientId,
       vehicleId,
       typeVehicle,
       vehiclePhoto,
-      fileIds: [],
+      fileIds: files,
     });
   }
 }

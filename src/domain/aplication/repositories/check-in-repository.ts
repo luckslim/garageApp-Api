@@ -6,6 +6,6 @@ export abstract class CheckInRepository {
   abstract findByVehicleId(vehicleId: string): Promise<CheckIn | null>;
   abstract findByAll(): Promise<CheckIn[]>;
   abstract create(checkIn: CheckIn): Promise<CheckIn>;
-  abstract save(checkIn: CheckIn): Promise<CheckIn>;
+  abstract save(checkIn: CheckIn): Promise<void>;
   abstract delete(Id: string): Promise<null>;
 }

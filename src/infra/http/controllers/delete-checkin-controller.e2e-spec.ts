@@ -1,6 +1,6 @@
 import { AppModule } from '@/infra/app.module';
 
-import { PrismaService } from '@/database/prisma/prisma.service';
+import { PrismaService } from '@/infra/database/prisma/prisma.service';
 
 import { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -38,7 +38,7 @@ describe('Delete Account (E2E)', () => {
       data: {
         vehicleId: 'rkl-9e96',
         typeVehicle: 'Moto',
-        photoVehicle:'foto.png',
+        photoVehicle: 'foto.png',
         clientId: user.id,
       },
     });

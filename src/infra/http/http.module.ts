@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CreateAccountController } from './controllers/create-account-controller';
 import { AuthenticateController } from './controllers/authenticate-controller';
 import { CreateCheckInController } from './controllers/create-checkin-controller';
-import { DatabaseModule } from '@/database/database.module';
+import { DatabaseModule } from '@/infra/database/database.module';
 import { RegisterClientUseCase } from '@/domain/aplication/use-cases/register-client';
 import { CheckInClientUseCase } from '@/domain/aplication/use-cases/check-in';
 import { AuthenticateClientUseCase } from '@/domain/aplication/use-cases/authenticate-client';
@@ -26,7 +26,7 @@ import { UploadAndCreateUseCase } from '@/domain/aplication/use-cases/upload-and
     CreateCheckInController,
     DeleteAccountController,
     EditAccountController,
-    DeleteCheckInController
+    DeleteCheckInController,
   ],
   providers: [
     RegisterClientUseCase,
