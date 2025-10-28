@@ -65,7 +65,6 @@ describe('Create Checkin (E2E)', () => {
         checkInId: checkInOnDatabase?.id
       }
     })
-
     expect(fileOnDatabase).toHaveLength(2)
   });
 });

@@ -1,5 +1,4 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id';
-import { Client } from '@/domain/enterprise/entities/client';
 import { faker } from '../../node_modules/@faker-js/faker/dist/index';
 import { Files, FilesProps } from '@/domain/enterprise/entities/files';
 import { Injectable } from '@nestjs/common';

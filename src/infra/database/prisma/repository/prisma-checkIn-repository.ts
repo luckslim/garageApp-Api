@@ -50,15 +50,15 @@ export class PrismaCheckInRepository implements CheckInRepository {
   async save(checkIn: CheckIn): Promise<void> {
     const data = PrismaCheckInMapper.toPrisma(checkIn);
     const { id, clientId, ...update } = data;
-    await Promise.all([
+    const result = await Promise.all([
       this.prisma.checkIn.update({
         where: {
           id,
         },
         data: update,
       }),
-      this.checkInfileRepository.createMany(checkIn.file.getNewItems()),
       this.checkInfileRepository.deleteMany(checkIn.file.getRemovedItems()),
+      this.checkInfileRepository.createMany(checkIn.file.getNewItems()),
     ]);
   }
   async delete(checkInId: string): Promise<null> {

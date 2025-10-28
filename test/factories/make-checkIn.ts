@@ -30,6 +30,7 @@ export class CheckInFactory {
   constructor(private prisma: PrismaService) {}
   async makePrismaCheckIn(data: Partial<CheckInProps>): Promise<CheckIn> {
     const checkIn = MakeCheckIn(data);
+
     await this.prisma.checkIn.create({
       data: PrismaCheckInMapper.toPrisma(checkIn),
     });

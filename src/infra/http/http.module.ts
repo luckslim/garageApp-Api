@@ -16,6 +16,8 @@ import { DeleteCheckInClientUseCase } from '@/domain/aplication/use-cases/delete
 import { UploadFileController } from './controllers/upload-files.controller';
 import { StorageModule } from '../storage/storage.module';
 import { UploadAndCreateUseCase } from '@/domain/aplication/use-cases/upload-and-create-files';
+import { EditCheckInController } from './controllers/edit-checkIn-controller';
+import { EditCheckInUseCase } from '@/domain/aplication/use-cases/edit-checkIn';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -27,6 +29,7 @@ import { UploadAndCreateUseCase } from '@/domain/aplication/use-cases/upload-and
     DeleteAccountController,
     EditAccountController,
     DeleteCheckInController,
+    EditCheckInController
   ],
   providers: [
     RegisterClientUseCase,
@@ -36,6 +39,7 @@ import { UploadAndCreateUseCase } from '@/domain/aplication/use-cases/upload-and
     EditClientUseCase,
     DeleteCheckInClientUseCase,
     UploadAndCreateUseCase,
+    EditCheckInUseCase
   ],
 })
 export class HttpModule {}

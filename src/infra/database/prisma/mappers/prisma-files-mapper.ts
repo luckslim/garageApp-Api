@@ -5,7 +5,7 @@ export class PrismaFilesMapper {
     return {
         id: file.id.toString(),
         title: file.fileName,
-        url: file.url,
+        url: file.url
     };
   }
 }
