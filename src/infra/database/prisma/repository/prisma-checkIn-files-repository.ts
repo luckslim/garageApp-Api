@@ -23,7 +23,7 @@ export class PrismaCheckInFilesRespository implements CheckInFilesRepository {
           // Atualiza vínculo
           await this.prisma.files.update({
             where: { id: fileId },
-            data: { checkInId },
+            data: { checkInId, },
           });
         } else {
           // Cria novo registro
@@ -39,7 +39,7 @@ export class PrismaCheckInFilesRespository implements CheckInFilesRepository {
       }),
     );
   }
-  
+
   async deleteMany(files: CheckInFiles[]): Promise<void> {
     if (files.length === 0) {
       return;

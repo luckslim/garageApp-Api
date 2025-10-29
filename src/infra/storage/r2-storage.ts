@@ -22,6 +22,7 @@ export class R2Storage implements Uploader {
     fileType,
     body,
   }: UploadParams): Promise<{ url: string }> {
+    const httpFileKey = this.envService.get('HTTP_FILE_KEY')
     const uploadId = randomUUID();
     const uniqueFileName = `${uploadId}-${fileName}`;
     await this.client.send(
@@ -33,7 +34,7 @@ export class R2Storage implements Uploader {
       }),
     );
     return {
-      url: uniqueFileName,
+      url: `https://pub-${httpFileKey}.r2.dev/${uniqueFileName}`,
     };
   }
 }

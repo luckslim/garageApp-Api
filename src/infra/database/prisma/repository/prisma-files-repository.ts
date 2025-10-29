@@ -7,7 +7,6 @@ import { PrismaFilesMapper } from '../mappers/prisma-files-mapper';
 @Injectable()
 export class PrismaFileRepository implements FileRepository {
   constructor(private prisma: PrismaService) {}
-
   async create(file: Files): Promise<void> {
     const data = PrismaFilesMapper.toPrisma(file);
     await this.prisma.files.create({
