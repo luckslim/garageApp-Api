@@ -18,6 +18,8 @@ import { StorageModule } from '../storage/storage.module';
 import { UploadAndCreateUseCase } from '@/domain/aplication/use-cases/upload-and-create-files';
 import { EditCheckInController } from './controllers/edit-checkIn-controller';
 import { EditCheckInUseCase } from '@/domain/aplication/use-cases/edit-checkIn';
+import { GetcheckInByUserController } from './controllers/get-checkIn-by-User-controller';
+import { GetCheckInByUserUseCase } from '@/domain/aplication/use-cases/get-checkIn-by-user';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -29,7 +31,8 @@ import { EditCheckInUseCase } from '@/domain/aplication/use-cases/edit-checkIn';
     DeleteAccountController,
     EditAccountController,
     DeleteCheckInController,
-    EditCheckInController
+    EditCheckInController,
+    GetcheckInByUserController
   ],
   providers: [
     RegisterClientUseCase,
@@ -39,7 +42,8 @@ import { EditCheckInUseCase } from '@/domain/aplication/use-cases/edit-checkIn';
     EditClientUseCase,
     DeleteCheckInClientUseCase,
     UploadAndCreateUseCase,
-    EditCheckInUseCase
+    EditCheckInUseCase,
+    GetCheckInByUserUseCase,
   ],
 })
 export class HttpModule {}

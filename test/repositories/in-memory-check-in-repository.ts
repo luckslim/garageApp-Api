@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/repositories/pagination-params';
 import { CheckInFilesRepository } from '@/domain/aplication/repositories/check-in-files-repository';
 import type { CheckInRepository } from '@/domain/aplication/repositories/check-in-repository';
 import type { CheckIn } from '@/domain/enterprise/entities/check-in';
@@ -5,6 +6,12 @@ import type { CheckIn } from '@/domain/enterprise/entities/check-in';
 export class InMemoryCheckInRepository implements CheckInRepository {
   public items: CheckIn[] = [];
   constructor(private checkInFilesRepository: CheckInFilesRepository) {}
+  async findById(id: string, { page }: PaginationParams): Promise<CheckIn[]> {
+    const checkIn = this.items
+      .filter((item) => item.clientId.toString() === id)
+      .slice((page - 1) * 2, page * 2);
+    return checkIn;
+  }
   async findByVehicleId(vehicleId: string) {
     const checkIn = this.items.find((item) => item.vehicleId === vehicleId);
     if (!checkIn) {
@@ -47,7 +54,8 @@ export class InMemoryCheckInRepository implements CheckInRepository {
     const itemIndex = this.items.findIndex((item) => item.id === checkIn.id);
     this.items[itemIndex] = checkIn;
     await this.checkInFilesRepository.createMany(checkIn.file.getNewItems());
-    await this.checkInFilesRepository.deleteMany(checkIn.file.getRemovedItems());
-
+    await this.checkInFilesRepository.deleteMany(
+      checkIn.file.getRemovedItems(),
+    );
   }
 }

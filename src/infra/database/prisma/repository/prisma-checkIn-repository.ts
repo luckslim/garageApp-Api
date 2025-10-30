@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { PrismaCheckInMapper } from '../mappers/prisma-checkIn-mapper';
 import { CheckInFilesRepository } from '@/domain/aplication/repositories/check-in-files-repository';
+import { PaginationParams } from '@/core/repositories/pagination-params';
 
 @Injectable()
 export class PrismaCheckInRepository implements CheckInRepository {
@@ -11,11 +12,20 @@ export class PrismaCheckInRepository implements CheckInRepository {
     private prisma: PrismaService,
     private checkInfileRepository: CheckInFilesRepository,
   ) {}
-  findByAll(): Promise<CheckIn[]> {
-    throw new Error('Method not implemented.');
-  }
-  findByVehicleId(vehicleId: string): Promise<CheckIn | null> {
-    throw new Error('Method not implemented.');
+
+  async findById(id: string, { page }: PaginationParams): Promise<CheckIn[]> {
+    const perPage = 1
+    const checkIn = await this.prisma.checkIn.findMany({
+      where: {
+        clientId: id,
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+      skip: (page-1) * perPage,
+      take: perPage,
+    });
+    return checkIn.map(PrismaCheckInMapper.toDomain);
   }
   async findByClientId(clientId: string): Promise<CheckIn | null> {
     const checkin = await this.prisma.checkIn.findFirst({
@@ -68,5 +78,11 @@ export class PrismaCheckInRepository implements CheckInRepository {
       },
     });
     return null;
+  }
+  findByAll(): Promise<CheckIn[]> {
+    throw new Error('Method not implemented.');
+  }
+  findByVehicleId(vehicleId: string): Promise<CheckIn | null> {
+    throw new Error('Method not implemented.');
   }
 }
