@@ -12,9 +12,30 @@ export class PrismaCheckInRepository implements CheckInRepository {
     private prisma: PrismaService,
     private checkInfileRepository: CheckInFilesRepository,
   ) {}
+  async findByCheckIn(id: string): Promise<CheckIn | null> {
+    const checkIn = await this.prisma.checkIn.findFirst({
+      where: {
+        id,
+      },
+    });
+    if (!checkIn) {
+      return null;
+    }
+    return PrismaCheckInMapper.toDomain(checkIn);
+  }
+  async checkOut(checkIn: CheckIn): Promise<void> {
+    const data = PrismaCheckInMapper.toPrisma(checkIn)
+    const {checkOut} = data 
+    const checkout = await this.prisma.checkIn.update({
+      where:{
+        id: checkIn.id.toString()
+      },
+      data:{checkOut}
+    })
+  }
 
   async findById(id: string, { page }: PaginationParams): Promise<CheckIn[]> {
-    const perPage = 1
+    const perPage = 1;
     const checkIn = await this.prisma.checkIn.findMany({
       where: {
         clientId: id,
@@ -22,7 +43,7 @@ export class PrismaCheckInRepository implements CheckInRepository {
       orderBy: {
         createdAt: 'asc',
       },
-      skip: (page-1) * perPage,
+      skip: (page - 1) * perPage,
       take: perPage,
     });
     return checkIn.map(PrismaCheckInMapper.toDomain);

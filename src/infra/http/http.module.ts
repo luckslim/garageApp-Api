@@ -20,6 +20,8 @@ import { EditCheckInController } from './controllers/edit-checkIn-controller';
 import { EditCheckInUseCase } from '@/domain/aplication/use-cases/edit-checkIn';
 import { GetcheckInByUserController } from './controllers/get-checkIn-by-User-controller';
 import { GetCheckInByUserUseCase } from '@/domain/aplication/use-cases/get-checkIn-by-user';
+import { CheckOutController } from './controllers/check-out-controller';
+import { CheckOutUseCase } from '@/domain/aplication/use-cases/check-out';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -32,7 +34,8 @@ import { GetCheckInByUserUseCase } from '@/domain/aplication/use-cases/get-check
     EditAccountController,
     DeleteCheckInController,
     EditCheckInController,
-    GetcheckInByUserController
+    GetcheckInByUserController,
+    CheckOutController
   ],
   providers: [
     RegisterClientUseCase,
@@ -44,6 +47,7 @@ import { GetCheckInByUserUseCase } from '@/domain/aplication/use-cases/get-check
     UploadAndCreateUseCase,
     EditCheckInUseCase,
     GetCheckInByUserUseCase,
+    CheckOutUseCase
   ],
 })
 export class HttpModule {}

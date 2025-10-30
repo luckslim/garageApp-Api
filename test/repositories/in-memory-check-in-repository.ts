@@ -6,6 +6,18 @@ import type { CheckIn } from '@/domain/enterprise/entities/check-in';
 export class InMemoryCheckInRepository implements CheckInRepository {
   public items: CheckIn[] = [];
   constructor(private checkInFilesRepository: CheckInFilesRepository) {}
+  async checkOut(checkIn: CheckIn): Promise<void> {
+    const data = this.items.findIndex((item)=>item.id === checkIn.id)
+    this.items[data]=checkIn
+  }
+  async findByCheckIn(id: string): Promise<CheckIn | null> {
+    const checkIn = this.items.find((item) => item.id.toString() === id);
+    if (!checkIn) {
+      return null;
+    }
+    return checkIn;
+  }
+
   async findById(id: string, { page }: PaginationParams): Promise<CheckIn[]> {
     const checkIn = this.items
       .filter((item) => item.clientId.toString() === id)

@@ -42,6 +42,9 @@ export class CheckIn extends AggregateRoot<CheckInProps> {
   set vehicleId(vehicleId: string) {
     this.props.vehicleId = vehicleId;
   }
+  set checkOutAt(checkOutAt: Date | undefined) {
+    this.props.checkOutAt = checkOutAt;
+  }
   static create(
     props: Optional<CheckInProps, 'checkInAt' | 'checkOutAt' | 'file'>,
     id?: UniqueEntityID,
