@@ -11,6 +11,84 @@
   <sub>Focado em desacoplamento, escalabilidade de código e organização por camadas de domínio.</sub>
 </p>
 
+| Método   | Endpoint                                      | Descrição                      |
+| :------- | :-------------------------------------------- | :----------------------------- |
+| **POST** | `https://garageapp-api.onrender.com/accounts` | Cria uma nova conta de usuário |
+
+#### Exemplo de Body:
+
+```json
+{
+  "name": "Lucas Soares",
+  "email": "lucas@email.com",
+  "password": "123456"
+}
+```
+
+---
+
+| Método   | Endpoint                                     | Descrição                                      |
+| :------- | :------------------------------------------- | :--------------------------------------------- |
+| **POST** | `https://garageapp-api.onrender.com/session` | Autenticação de usuário - Retornando jwt-token |
+
+#### Exemplo de Body:
+
+```json
+{
+  "email": "lucas@email.com",
+  "password": "123456"
+}
+```
+
+---
+
+| Método   | Endpoint                                           | Descrição         |
+| :------- | :------------------------------------------------- | :---------------- |
+| **POST** | `https://garageapp-api.onrender.com/edit/accounts` | Edição de usuário |
+
+#### Exemplo de Body:
+
+```json
+{
+  "id": "user.id",
+  "email": "teste@example.com",
+  "name": "teste de nome",
+  "password": "123123"
+}
+```
+
+---
+### OBS: Essa rota só pode ser acessada com token
+
+| Método   | Endpoint                                     | Descrição         |
+| :------- | :------------------------------------------- | :---------------- |
+| **POST** | `https://garageapp-api.onrender.com/checkin` | Criar checkIn |
+
+#### Exemplo de Body:
+
+```json
+{
+  "vehicleId": " rkl-9e96",
+  "typeVehicle": " Moto",
+  "vehiclePhoto": "photo.png",
+  "files": ["fileId", "fileId"]
+}
+```
+
+---
+### OBS: Essa rota só pode ser acessada com token
+| Método   | Endpoint                                     | Descrição         |
+| :------- | :------------------------------------------- | :---------------- |
+| **POST** | `https://garageapp-api.onrender.com/delete/accounts` | Deletar usuário |
+
+#### Exemplo de Body:
+
+```json
+{
+  "id": "user.id",
+}
+```
+
 ---
 
 ## 🧠 Sobre o Projeto
@@ -19,14 +97,6 @@ O **Garage App** é um backend projetado para gerenciar estacionamentos de shopp
 Ele segue os princípios da **Clean Architecture**, garantindo independência de frameworks e fácil manutenção do core da aplicação.
 
 ---
-
-| Método   | Endpoint Completo                                      | Descrição                                                              |
-| :------- | :----------------------------------------------------- | :--------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| **POST** | `https://garageapp-api.onrender.com/accounts`          | Criar conta de usuário                                                 | `json<br>{<br>  "name": "Lucas Soares",<br>  "email": "lucas@email.com",<br>  "password": "123456"<br>}` |
-| **POST** | `https://garageapp-api.onrender.com/session`           | Autenticação de Usuário, retornando token-Jwt para futuras requisições |                                                                                                          | `json<br>{<br>  "name": "Lucas Soares",<br>  "email": "lucas@email.com",<br>  "password": "123456"<br>}` |
-| **POST** | `https://garageapp-api.onrender.com/edit/accounts`     | editar dados de usuário                                                |                                                                                                          | `json<br>{<br>  "name": "Lucas Soares",<br>  "email": "lucas@email.com",<br>  "password": "123456"<br>}` |
-| **POST** | `https://garageapp-api.onrender.com/edit/accounts/:id` | Atualiza as informações de uma conta existente                         |                                                                                                          | `json<br>{<br>  "name": "Lucas Soares",<br>  "email": "lucas@email.com",<br>  "password": "123456"<br>}` |
-| **POST** | `https://garageapp-api.onrender.com/delete/accounts/`  | Exclui uma conta existente                                             | `json<br>{<br>  "name": "Lucas Soares",<br>  "email": "lucas@email.com",<br>  "password": "123456"<br>}` |                                                                                                          |
 
 OBS: Para rodar este projeto localmente, você precisa criar um arquivo .env e definir as seguintes variáveis:
 
