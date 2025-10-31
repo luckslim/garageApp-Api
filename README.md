@@ -11,6 +11,8 @@
   <sub>Focado em desacoplamento, escalabilidade de código e organização por camadas de domínio.</sub>
 </p>
 
+### End-Points:
+
 | Método   | Endpoint                                      | Descrição                      |
 | :------- | :-------------------------------------------- | :----------------------------- |
 | **POST** | `https://garageapp-api.onrender.com/accounts` | Cria uma nova conta de usuário |
