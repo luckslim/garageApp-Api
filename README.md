@@ -19,6 +19,14 @@ O **Garage App** é um backend projetado para gerenciar estacionamentos de shopp
 Ele segue os princípios da **Clean Architecture**, garantindo independência de frameworks e fácil manutenção do core da aplicação.
 
 ---
+| Método     | Endpoint Completo                                        | Descrição                                      |
+| :--------- | :------------------------------------------------------- | :--------------------------------------------- |
+| **POST**    | `https://garageapp-api.onrender.com/accounts`| Criar conta de usuário              |
+| **Post**    | `https://garageapp-api.onrender.com/session`| Autenticação de Usuário, retornando token-Jwt para futuras requisições      |
+| **POST**   | `https://garageapp-api.onrender.com/edit/accounts` | editar dados de usuário               |
+| **PUT**    | `https://garageapp-api.onrender.com/edit/accounts/:id`   | Atualiza as informações de uma conta existente |
+| **DELETE** | `https://garageapp-api.onrender.com/delete/accounts/:id` | Exclui uma conta existente                     |
+
 
 OBS: Para rodar este projeto localmente, você precisa criar um arquivo .env e definir as seguintes variáveis:
 ```bash
